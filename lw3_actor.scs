@@ -1,0 +1,65 @@
+lw4_3_actor=[*
+    sc_node_class
+        -> concept_human;
+        -> concept_opera;
+        -> concept_theatre;
+        -> concept_ballet;
+        -> concept_cinema;
+        -> concept_role_performer;;
+
+    sc_node_norole_relation
+        -> nrel_universality;
+        -> nrel_implication;
+        -> nrel_actor;
+        -> nrel_is;;
+
+    sc_node_role_relation
+        -> rrel_linked_variables;
+        -> rrel_then;
+        -> rrel_if;;
+
+    sc_var
+        -> _x;
+        -> _y;
+        -> _a;
+        -> _b;
+        -> _c;
+        -> _d;
+        -> _e;;
+
+    nrel_universality
+        -> ... (*
+            -> rrel_linked_variables: [* _x <- sc_var;; *];;
+            -> ... (*
+                <- nrel_implication;;
+                -> rrel_if: [* _x <- nrel_actor;; *];;
+                -> rrel_then: ... (*
+                    <- nrel_universality;;
+                    -> rrel_linked_variables: [*
+                        sc_var
+                             -> _y;
+                             -> _a;
+                             -> _b;
+                             -> _c;
+                             -> _d;
+                             -> _e;;
+                    *];;
+                    -> ... (*
+                        <- nrel_implication;;
+                        -> rrel_if: [*
+                            concept_human _-> _y (*
+                                _=>x: _b(*_<-concept_theatre;;*);;
+                                _=>x: _d(*_<-concept_cinema;;*);;
+                                _=>x: _e(*_<-concept_opera;;*);;
+                                _=>x: _c(*_<-concept_ballet;;*);;
+                            *);;     
+                        *];;
+                        -> rrel_then:[*
+                            concept_role_performer _-> _a(*
+                                 _=>nrel_is: _y;;*);;
+                        *];;
+                    *);;
+                *);;
+            *);;
+         *);;  
+*];;  
